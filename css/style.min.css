@@ -70,23 +70,59 @@
   color: #6d4c3d;
 }
 
-/* Mobile Responsive */
+/* Mobile Optimization Fix */
 @media (max-width: 768px) {
   #countdown {
-    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px 20px; /* spacing between circles */
+    justify-items: center;
   }
+
+  .countdown-segment {
+    width: 120px;
+    height: 120px;
+    position: relative;
+  }
+
+  .countdown-ring {
+    width: 120px;
+    height: 120px;
+  }
+
+  .countdown-number {
+    font-size: 1.6em;
+  }
+
+  .countdown-label {
+    font-size: 0.85em;
+    margin-top: 8px;
+  }
+}
+
+/* For very small screens (like iPhone SE or narrow viewports) */
+@media (max-width: 420px) {
+  #countdown {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 15px;
+  }
+
   .countdown-segment {
     width: 100px;
     height: 100px;
   }
+
   .countdown-ring {
     width: 100px;
     height: 100px;
   }
+
   .countdown-number {
-    font-size: 1.5em;
+    font-size: 1.4em;
   }
+
   .countdown-label {
-    font-size: 0.85em;
+    font-size: 0.8em;
   }
 }
+
