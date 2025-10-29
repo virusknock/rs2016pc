@@ -538,9 +538,17 @@
       };
 
       function getRingLength() {
-        const r = window.innerWidth <= 768 ? 52 : 65; // responsive radius
-        return 2 * Math.PI * r;
-      }
+          let r;
+          if (window.innerWidth <= 480) {
+            r = 40;
+          } else if (window.innerWidth <= 768) {
+            r = 52;
+          } else {
+            r = 65;
+          }
+          return 2 * Math.PI * r;
+        }
+
 
       function updateRings(days, hours, minutes, seconds) {
         const ringLength = getRingLength();
@@ -605,6 +613,7 @@
 </body>
 
 </html>
+
 
 
 
