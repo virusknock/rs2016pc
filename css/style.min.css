@@ -70,59 +70,62 @@
   color: #6d4c3d;
 }
 
-/* Mobile Optimization Fix */
+/* --- MOBILE FIX FOR COUNTDOWN OVERLAP --- */
 @media (max-width: 768px) {
   #countdown {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px 20px; /* spacing between circles */
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(120px, 1fr));
     justify-items: center;
+    align-items: center;
+    gap: 40px 30px; /* vertical / horizontal spacing */
+    margin-top: 20px;
   }
 
   .countdown-segment {
-    width: 120px;
-    height: 120px;
+    width: 120px !important;
+    height: 120px !important;
     position: relative;
   }
 
   .countdown-ring {
-    width: 120px;
-    height: 120px;
+    width: 120px !important;
+    height: 120px !important;
   }
 
   .countdown-number {
-    font-size: 1.6em;
+    font-size: 1.6em !important;
   }
 
   .countdown-label {
-    font-size: 0.85em;
-    margin-top: 8px;
+    font-size: 0.85em !important;
+    margin-top: 10px;
   }
 }
 
-/* For very small screens (like iPhone SE or narrow viewports) */
-@media (max-width: 420px) {
+/* --- FOR SMALLER PHONES --- */
+@media (max-width: 480px) {
   #countdown {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px 15px;
+    grid-template-columns: repeat(2, minmax(100px, 1fr));
+    gap: 45px 25px; /* Increase vertical spacing */
   }
 
   .countdown-segment {
-    width: 100px;
-    height: 100px;
+    width: 110px !important;
+    height: 110px !important;
   }
 
   .countdown-ring {
-    width: 100px;
-    height: 100px;
+    width: 110px !important;
+    height: 110px !important;
   }
 
   .countdown-number {
-    font-size: 1.4em;
+    font-size: 1.4em !important;
   }
 
   .countdown-label {
-    font-size: 0.8em;
+    font-size: 0.8em !important;
+    margin-top: 12px;
   }
 }
 
