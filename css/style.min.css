@@ -65,7 +65,7 @@
 
 .countdown-item .label {
   position: absolute;
-  bottom: -20px;
+  bottom: -40px;
   left: 50%;
   transform: translateX(-50%);
   /* color: #B46A48; */
@@ -108,4 +108,34 @@
     gap: 25px;
   }
 }
+.countdown-ring {
+  width: 100%;
+  max-width: 120px;  /* You can adjust to fit your design */
+  height: auto;
+}
+
+.countdown-segment svg {
+  width: 100%;
+  height: auto;
+}
+@media (max-width: 768px) {
+  #countdown {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .countdown-segment {
+    flex: 1 1 40%;
+    margin-bottom: 10px;
+  }
+
+  .countdown-number {
+    font-size: 1.5rem;
+  }
+
+  .countdown-label {
+    font-size: 0.9rem;
+  }
+}
+
 /*# sourceMappingURL=style.min.css.map */
