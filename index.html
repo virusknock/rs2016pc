@@ -154,56 +154,44 @@
     </section>
     <!-- Section - The Couple End -->
 
-     <!-- ===== Countdown Section Start ===== -->
-<section id="countdown-section" class="section">
-  <div class="container text-center">
-    <h2 class="section-title">The Wait Is Almost Over!</h2>
-    <p class="countdown-subtitle">Because otherwise, our parents won’t stop asking 'How many days left?' — and the aunties might think it’s been postponed.</p>
-
-    <div id="countdown-wrapper" aria-live="polite">
-      <!-- DAYS -->
-      <div class="countdown-item">
-        <svg class="countdown-svg" viewBox="0 0 150 150" role="img" aria-label="Days remaining">
-          <circle class="bg" cx="75" cy="75" r="65"></circle>
-          <circle class="progress" id="days-ring" cx="75" cy="75" r="65"></circle>
-        </svg>
-        <div class="value" id="days">0</div>
-        <div class="label">Days</div>
-      </div>
-
-      <!-- HOURS -->
-      <div class="countdown-item">
-        <svg class="countdown-svg" viewBox="0 0 150 150" role="img" aria-label="Hours remaining">
-          <circle class="bg" cx="75" cy="75" r="65"></circle>
-          <circle class="progress" id="hours-ring" cx="75" cy="75" r="65"></circle>
-        </svg>
-        <div class="value" id="hours">0</div>
-        <div class="label">Hours</div>
-      </div>
-
-      <!-- MINUTES -->
-      <div class="countdown-item">
-        <svg class="countdown-svg" viewBox="0 0 150 150" role="img" aria-label="Minutes remaining">
-          <circle class="bg" cx="75" cy="75" r="65"></circle>
-          <circle class="progress" id="minutes-ring" cx="75" cy="75" r="65"></circle>
-        </svg>
-        <div class="value" id="minutes">0</div>
-        <div class="label">Minutes</div>
-      </div>
-
-      <!-- SECONDS -->
-      <div class="countdown-item">
-        <svg class="countdown-svg" viewBox="0 0 150 150" role="img" aria-label="Seconds remaining">
-          <circle class="bg" cx="75" cy="75" r="65"></circle>
-          <circle class="progress" id="seconds-ring" cx="75" cy="75" r="65"></circle>
-        </svg>
-        <div class="value" id="seconds">0</div>
-        <div class="label">Seconds</div>
-      </div>
+   <section class="countdown-section bg-secondary-2">
+  <h2 class="countdown-title">The Wait Is Almost Over!</h2>
+  <p class="countdown-subtitle">
+    Because otherwise, our parents won’t stop asking ‘How many days left?’ — and the aunties might think it’s been postponed, and we can’t risk that.
+  </p>
+  
+  <div id="countdown">
+    <div class="countdown-segment">
+      <svg class="countdown-ring" viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="54"></circle>
+      </svg>
+      <div class="countdown-number" id="days">0</div>
+      <div class="countdown-label">Days</div>
+    </div>
+    <div class="countdown-segment">
+      <svg class="countdown-ring" viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="54"></circle>
+      </svg>
+      <div class="countdown-number" id="hours">0</div>
+      <div class="countdown-label">Hours</div>
+    </div>
+    <div class="countdown-segment">
+      <svg class="countdown-ring" viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="54"></circle>
+      </svg>
+      <div class="countdown-number" id="minutes">0</div>
+      <div class="countdown-label">Minutes</div>
+    </div>
+    <div class="countdown-segment">
+      <svg class="countdown-ring" viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="54"></circle>
+      </svg>
+      <div class="countdown-number" id="seconds">0</div>
+      <div class="countdown-label">Seconds</div>
     </div>
   </div>
 </section>
-<!-- ===== Countdown Section End ===== -->
+
 
     <!-- Section - Wedding Event Start -->
     <section id="wedding-event">
@@ -540,188 +528,52 @@
 
     <!-- Required JS files -->
     <script src="js/script.min.js"></script>
-   <script>
-// ---- Config ----
-const targetDate = new Date("April 7, 2026 10:00:00 GMT+0530").getTime();
-const confettiLibURL = "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js";
+  <script>
+  const weddingDate = new Date("Apr 07, 2026 10:00:00").getTime();
 
-// element refs
-const rings = {
-  days: document.getElementById('days-ring'),
-  hours: document.getElementById('hours-ring'),
-  minutes: document.getElementById('minutes-ring'),
-  seconds: document.getElementById('seconds-ring')
-};
-const values = {
-  days: document.getElementById('days'),
-  hours: document.getElementById('hours'),
-  minutes: document.getElementById('minutes'),
-  seconds: document.getElementById('seconds')
-};
+  const circles = document.querySelectorAll(".countdown-ring circle");
+  const circumference = 2 * Math.PI * 54;
 
-const title = document.querySelector('#countdown-section .section-title');
-const subtitle = document.querySelector('#countdown-section .countdown-subtitle');
-const wrapper = document.getElementById('countdown-wrapper');
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const diff = weddingDate - now;
 
-// helper to get numeric r from SVG circle (falls back to default)
-function getRadiusFor(circleEl){
-  if(!circleEl) return 65;
-  const rAttr = circleEl.getAttribute('r');
-  const r = rAttr ? parseFloat(rAttr) : 65;
-  return r;
-}
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
 
-// compute and set dasharray/dashoffset responsively
-function setRingStyles(){
-  Object.values(rings).forEach((el) => {
-    if(!el) return;
-    const r = getRadiusFor(el);
-    const len = 2 * Math.PI * r;
-    el.style.strokeDasharray = len;
-    // keep initial full circle visible (dashoffset will be updated per unit)
-    el.style.strokeDashoffset = len;
-  });
-}
+    document.getElementById("days").textContent = days;
+    document.getElementById("hours").textContent = hours;
+    document.getElementById("minutes").textContent = minutes;
+    document.getElementById("seconds").textContent = seconds;
 
-// update ring offsets based on current values
-function updateRingOffsets(days, hours, minutes, seconds){
-  // days - using 365 as full circle reference (good enough for long countdowns)
-  const rDays = getRadiusFor(rings.days);
-  const lenDays = 2 * Math.PI * rDays;
-  rings.days.style.strokeDashoffset = Math.max(0, lenDays - ( (days % 365) / 365 ) * lenDays);
+    const dayProgress = (days / 365) * circumference;
+    const hourProgress = (hours / 24) * circumference;
+    const minProgress = (minutes / 60) * circumference;
+    const secProgress = (seconds / 60) * circumference;
 
-  const rHours = getRadiusFor(rings.hours);
-  const lenHours = 2 * Math.PI * rHours;
-  rings.hours.style.strokeDashoffset = Math.max(0, lenHours - (hours / 24) * lenHours);
+    circles[0].style.strokeDashoffset = circumference - dayProgress;
+    circles[1].style.strokeDashoffset = circumference - hourProgress;
+    circles[2].style.strokeDashoffset = circumference - minProgress;
+    circles[3].style.strokeDashoffset = circumference - secProgress;
 
-  const rMinutes = getRadiusFor(rings.minutes);
-  const lenMinutes = 2 * Math.PI * rMinutes;
-  rings.minutes.style.strokeDashoffset = Math.max(0, lenMinutes - (minutes / 60) * lenMinutes);
-
-  const rSeconds = getRadiusFor(rings.seconds);
-  const lenSeconds = 2 * Math.PI * rSeconds;
-  rings.seconds.style.strokeDashoffset = Math.max(0, lenSeconds - (seconds / 60) * lenSeconds);
-}
-
-// countdown loop
-let countdownTimer = null;
-function startCountdown(){
-  // ensure rings styled for current sizes
-  setRingStyles();
-
-  countdownTimer = setInterval(() => {
-    const now = Date.now();
-    const distance = targetDate - now;
-
-    if (distance <= 0) {
-      clearInterval(countdownTimer);
-      Object.values(values).forEach(v => v.textContent = "0");
-      updateRingOffsets(0,0,0,0);
-      fireConfettiOnce();
-      return;
+    if (diff <= 0) {
+      clearInterval(interval);
+      document.querySelector(".countdown-section").innerHTML =
+        "<h2>It's Wedding Time! 🎉</h2>";
     }
-
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    // update numbers
-    values.days.textContent = days;
-    values.hours.textContent = hours.toString().padStart(2,'0');
-    values.minutes.textContent = minutes.toString().padStart(2,'0');
-    values.seconds.textContent = seconds.toString().padStart(2,'0');
-
-    // update ring visuals
-    updateRingOffsets(days, hours, minutes, seconds);
-  }, 1000);
-}
-
-// responsive: recalc when resized/orientation change
-let resizeTimeout = null;
-window.addEventListener('resize', () => {
-  clearTimeout(resizeTimeout);
-  resizeTimeout = setTimeout(() => {
-    setRingStyles();
-  }, 150);
-});
-
-// IntersectionObserver to reveal title + wrapper with delay
-if (title) {
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting){
-        title.classList.add('visible');
-        subtitle.classList.add('visible');
-        setTimeout(()=> wrapper.classList.add('visible'), 600);
-        io.unobserve(title);
-      }
-    });
-  }, { threshold: 0.25 });
-  io.observe(title);
-}
-
-// ---- Confetti (load library then allow fire) ----
-let confettiLoaded = false;
-let confettiFired = false;
-const confettiLoader = document.createElement('script');
-confettiLoader.src = confettiLibURL;
-confettiLoader.onload = () => { confettiLoaded = true; };
-document.body.appendChild(confettiLoader);
-
-function fireConfettiOnce(){
-  if(!confettiLoaded){
-    // if lib not loaded yet, wait a little then try
-    const wait = setInterval(() => {
-      if(confettiLoaded){ clearInterval(wait); runConfetti(); }
-    }, 200);
-  } else {
-    runConfetti();
   }
-}
 
-function runConfetti(){
-  if(confettiFired) return;
-  confettiFired = true;
-  const duration = 10 * 1000; // 10 seconds
-  const end = Date.now() + duration;
-
-  (function frame(){
-    // left and right bursts
-    confetti({
-      particleCount: 5,
-      angle: 60,
-      spread: 65,
-      origin: { x: 0 },
-      colors: ['#D4AF37', '#f1e2d5', '#E7A37B', '#fff']
-    });
-    confetti({
-      particleCount: 5,
-      angle: 120,
-      spread: 65,
-      origin: { x: 1 },
-      colors: ['#D4AF37', '#f1e2d5', '#E7A37B', '#fff']
-    });
-
-    if(Date.now() < end){
-      requestAnimationFrame(frame);
-    }
-  })();
-}
-
-// Start countdown after DOM loaded
-document.addEventListener('DOMContentLoaded', function(){
-  // small delay to ensure CSS computed sizes are stable
-  setTimeout(() => {
-    setRingStyles();
-    startCountdown();
-  }, 50);
-});
+  const interval = setInterval(updateCountdown, 1000);
+  updateCountdown();
 </script>
+
 
 </body>
 
 </html>
+
 
 
 
