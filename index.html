@@ -195,6 +195,11 @@
             <div class="countdown-label fs-5 mb-4 text-body-secondary">Seconds</div>
           </div>
         </div>
+          <div class="text-center mb-5 calendar-container">
+                    <button type="button" id="addToCalendar" class="btn mx-auto">
+                        <span>Add to Calendar</span>
+                    </button>
+                </div>
         <img src="img/shape-wave-top-left-2.svg" alt="" class="shape-wave d-none d-lg-block position-absolute start-0 top-0 z-1">
         <img src="img/shape-wave-middle-right.svg" alt="" class="shape-wave shape-wave-xs d-none d-lg-block end-0 mb-5 position-absolute top-50 translate-middle-y z-1">
     </section>
@@ -573,6 +578,45 @@ One thing led to another. Now there’s a wedding website.</p>
 
   const interval = setInterval(updateCountdown, 1000);
   updateCountdown();
+</script>
+
+
+<script>
+document.getElementById("addToCalendar").addEventListener("click", function () {
+
+    const event = [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//Chaithanya and Pavan//Wedding//EN",
+        "CALSCALE:GREGORIAN",
+        "BEGIN:VEVENT",
+        "UID:chaithanya-pavan-wedding-20261129@rs2016pc",
+        "DTSTAMP:" + new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, ""),
+        "DTSTART:20261129T133000Z",
+        "DTEND:20261129T163000Z",
+        "SUMMARY:Chaithanya & Pavan's Wedding",
+        "LOCATION:Brindavan Bliss",
+        "DESCRIPTION:Join us to celebrate Chaithanya & Pavan's Wedding!",
+        "END:VEVENT",
+        "END:VCALENDAR"
+    ].join("\r\n");
+
+    const blob = new Blob([event], {
+        type: "text/calendar;charset=utf-8"
+    });
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "Chaithanya-Pavan-Wedding.ics";
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+});
 </script>
 
 
