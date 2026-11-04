@@ -585,22 +585,32 @@ One thing led to another. Now there’s a wedding website.</p>
 document.getElementById("addToCalendar").addEventListener("click", function () {
 
     const event = [
-        "BEGIN:VCALENDAR",
-        "VERSION:2.0",
-        "PRODID:-//Chaithanya and Pavan//Wedding//EN",
-        "CALSCALE:GREGORIAN",
         "BEGIN:VEVENT",
-        "UID:chaithanya-pavan-wedding-20261129@rs2016pc",
+        "UID:chaithanya-pavan-wedding-allday-20261129@rs2016pc",
         "DTSTAMP:" + new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, ""),
         "DTSTART;VALUE=DATE:20261129",
         "DTEND;VALUE=DATE:20261130",
         "SUMMARY:Chaithanya & Pavan's Wedding",
-        "LOCATION:Brindavan Bliss",
-        "LOCATION:Brindavan Bliss",
-        "DESCRIPTION:We saved you a spot. Your calendar knows. See you there!!\\n\\nLocation: google.com/maps/search/?api=1&query=Brindavan+Bliss+Wedding+Venue&query_place_id=ChIJ5E-5V3VBusOQqIbgjYBNX1s",
-        "URL:google.com/maps/search/?api=1&query=Brindavan+Bliss+Wedding+Venue&query_place_id=ChIJ5E-5V3VBusOQqIbgjYBNX1s",
+        "LOCATION:Brindavan Bliss, Uttarahalli Hobli, Bengaluru",
+        "DESCRIPTION:We saved you a spot. Your calendar knows. See you there!\\n\\nFind your way to Brindavan Bliss:\\nhttps://www.google.com/maps/search/?api=1&query=Brindavan+Bliss&query_place_id=ChIJSej0v3VBrjsRqIbkDICNtF0",
+        "URL:https://www.google.com/maps/search/?api=1&query=Brindavan+Bliss&query_place_id=ChIJSej0v3VBrjsRqIbkDICNtF0",
         "END:VEVENT",
-        "END:VCALENDAR"
+        // "BEGIN:VCALENDAR",
+        // "VERSION:2.0",
+        // "PRODID:-//Chaithanya and Pavan//Wedding//EN",
+        // "CALSCALE:GREGORIAN",
+        // "BEGIN:VEVENT",
+        // "UID:chaithanya-pavan-wedding-20261129@rs2016pc",
+        // "DTSTAMP:" + new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, ""),
+        // "DTSTART;VALUE=DATE:20261129",
+        // "DTEND;VALUE=DATE:20261130",
+        // "SUMMARY:Chaithanya & Pavan's Wedding",
+        // "LOCATION:Brindavan Bliss",
+        // "LOCATION:Brindavan Bliss",
+        // "DESCRIPTION:We saved you a spot. Your calendar knows. See you there!!\\n\\nLocation: https://www.google.com/maps/search/?api=1&query=Brindavan+Bliss+Wedding+Venue&query_place_id=ChIJ5E-5V3VBusOQqIbgjYBNX1s",
+        // "URL:https://www.google.com/maps/search/?api=1&query=Brindavan+Bliss+Wedding+Venue&query_place_id=ChIJ5E-5V3VBusOQqIbgjYBNX1s",
+        // "END:VEVENT",
+        // "END:VCALENDAR"
     ].join("\r\n");
 
     const blob = new Blob([event], {
