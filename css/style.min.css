@@ -129,3 +129,6 @@
   }
 }
 
+.calendar-container {
+    margin-top: clamp(32px, 4vw, 56px);
+}
