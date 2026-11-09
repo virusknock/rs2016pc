@@ -287,39 +287,10 @@
                             </div>
                             <!-- //.mt-5 -->
 
-                            <div class="ride-buttons">
-
-  <!-- Uber -->
-  <a
-    href="https://m.uber.com/looking?pickup=my_location&amp;drop%5B0%5D=%7B%22latitude%22%3A12.7831552%2C%22longitude%22%3A77.5230949%7D"
-    class="ride-button"
-    aria-label="Book Uber"
-    title="Uber"
-    target="_blank"
-  >
-    <img
-      src="https://commons.wikimedia.org/wiki/Special:FilePath/Uber_logo_2018.svg"
-      alt="Uber"
-      class="ride-logo uber-logo"
-    >
-  </a>
-
-  <!-- Ola -->
-  <a
-    href="https://book.olacabs.com/?drop_lat=12.7831552&amp;drop_lng=77.5230949&amp;drop_name=Brindavan%20Bliss"
-    class="ride-button"
-    aria-label="Book Ola"
-    title="Ola"
-    target="_blank"
-  >
-    <img
-      src="https://commons.wikimedia.org/wiki/Special:FilePath/Ola_Cabs_logo.svg"
-      alt="Ola"
-      class="ride-logo ola-logo"
-    >
-  </a>
-
-</div>
+                            <a href="https://m.uber.com/looking?pickup=my_location&amp;drop%5B0%5D=%7B%22latitude%22%3A12.7831552%2C%22longitude%22%3A77.5230949%7D" target="_blank"
+   rel="noopener noreferrer" class="btn mx-auto">
+                                <span>Ride With Uber</span>
+                            </a>
                         </div>
                         <!-- //.d-flex -->
 
@@ -613,24 +584,84 @@ One thing led to another. Now there’s a wedding website.</p>
 <script>
 document.getElementById("addToCalendar").addEventListener("click", function () {
 
-    const event = [
+    const googleMapsUrl =
+        "https://www.google.com/maps/search/?api=1&query=12.7831552,77.5230949";
+
+    const uberUrl =
+        "https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff[latitude]=12.7831552&dropoff[longitude]=77.5230949&dropoff[nickname]=Brindavan%20Bliss";
+
+
+
+    // Correct iCalendar text escaping
+    function escapeICSText(text) {
+        return text
+            .replace(/\\/g, "\\\\")
+            .replace(/\r\n|\n|\r/g, "\\n")
+            .replace(/,/g, "\\,")
+            .replace(/;/g, "\\;");
+    }
+
+    // Fold long lines according to iCalendar specifications
+    function foldLine(line) {
+        let result = "";
+        let currentLine = "";
+        let byteLength = 0;
+
+        for (const char of line) {
+            const charBytes = new TextEncoder()
+                .encode(char).length;
+
+            if (byteLength + charBytes > 75) {
+                result += currentLine + "\r\n ";
+                currentLine = char;
+                byteLength = 1 + charBytes;
+            } else {
+                currentLine += char;
+                byteLength += charBytes;
+            }
+        }
+
+        return result + currentLine;
+    }
+
+    const dtstamp = new Date()
+        .toISOString()
+        .replace(/[-:]/g, "")
+        .replace(/\.\d{3}Z$/, "Z");
+
+    const description = [
+        "We saved you a spot. Your calendar knows. See you there!",
+        "",
+        "GETTING TO THE WEDDING VENUE",
+        "",
+        "Google Maps: " + googleMapsUrl,
+        "",
+        "Book Uber: " + uberUrl,
+        "",
+        "Book Ola: " + olaUrl
+    ].join("\n");
+
+    const eventLines = [
         "BEGIN:VCALENDAR",
         "VERSION:2.0",
         "PRODID:-//Chaithanya and Pavan//Wedding//EN",
         "CALSCALE:GREGORIAN",
         "BEGIN:VEVENT",
         "UID:chaithanya-pavan-wedding-20261129@rs2016pc",
-        "DTSTAMP:" + new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, ""),
+        "DTSTAMP:" + dtstamp,
         "DTSTART;VALUE=DATE:20261129",
         "DTEND;VALUE=DATE:20261130",
         "SUMMARY:Chaithanya & Pavan's Wedding",
         "LOCATION:Brindavan Bliss",
-        "LOCATION:Brindavan Bliss",
-        "DESCRIPTION:We saved you a spot. Your calendar knows. See you there!\\n\\nLocation: https://www.google.com/maps/search/?api=1&query=Brindavan+Bliss+Wedding+Venue&query_place_id=ChIJ5E-5V3VBusOQqIbgjYBNX1s",
-        "URL:https://www.google.com/maps/search/?api=1&query=Brindavan+Bliss+Wedding+Venue&query_place_id=ChIJ5E-5V3VBusOQqIbgjYBNX1s",
+        "DESCRIPTION:" + escapeICSText(description),
+        "URL;VALUE=URI:" + googleMapsUrl,
         "END:VEVENT",
         "END:VCALENDAR"
-    ].join("\r\n");
+    ];
+
+    const event = eventLines
+        .map(foldLine)
+        .join("\r\n") + "\r\n";
 
     const blob = new Blob([event], {
         type: "text/calendar;charset=utf-8"
@@ -647,6 +678,7 @@ document.getElementById("addToCalendar").addEventListener("click", function () {
     document.body.removeChild(link);
 
     setTimeout(() => URL.revokeObjectURL(url), 1000);
+
 });
 </script>
 
